@@ -30,4 +30,8 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  base_title: "Pet Store"
+  sign_up:
+    title: "Sign Up"
+    create_success: "Signed up successfully!"
+  count_errors: "The form contains %{errors}"

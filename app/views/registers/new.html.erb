@@ -1,0 +1,22 @@
+<% provide(:title, t("sign_up.title"))%>
+<h1><%= t("sign_up.title") %></h1>
+<%= form_with(model: @user, url: signup_path) do |f| %>
+  <%= render "shared/error_messages", object: f.object %>
+  <div class="mb-3">
+    <%= f.label :name, class: "form-label" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :email, class: "form-label" %>
+    <%= f.text_field :email, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :password, class: "form-label" %>
+    <%= f.password_field :password, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :password_confirmation, class: "form-label" %>
+    <%= f.password_field :password_confirmation, class: "form-control" %>
+  </div>
+  <%= f.submit t("sign_up.title"), class: "btn btn-large btn-primary custom-btn-primary" %>
+<% end %>

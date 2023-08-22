@@ -1,0 +1,8 @@
+regex:
+  email: !ruby/regexp '/\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i'
+user:
+  validates:
+    password:
+      min: 6
+    name:
+      max: 50
