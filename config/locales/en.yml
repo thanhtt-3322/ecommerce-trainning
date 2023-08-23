@@ -33,5 +33,17 @@ en:
   base_title: "Pet Store"
   sign_up:
     title: "Sign Up"
+    sign_in_now: "Sign in now!"
     create_success: "Signed up successfully!"
+  sign_in:
+    title: "Sign In"
+    sign_up_now: "Sign up now!"
+    success_message: "Signed in successfully!"
+    error_message: "Email or password is invalid!"
+  sign_out:
+    title: "Sign Out"
+    success_message: "Logged out!"
   count_errors: "The form contains %{errors}"
+  header:
+    profile: "Profile"
+    order_history: "Order History"
