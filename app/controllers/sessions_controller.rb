@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:password])
       sign_in user
       flash[:success] = t("sign_in.success_message")
-      redirect_back_or root_path
+      redirect_back_or user.admin? ? admin_home_path : root_path
     else
       flash.now[:error] = t("sign_in.error_message")
       render :new
