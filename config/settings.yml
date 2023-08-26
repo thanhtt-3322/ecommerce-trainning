@@ -6,3 +6,16 @@ user:
       min: 6
     name:
       max: 50
+product:
+  validates:
+    name:
+      max: 100
+    price:
+      max: 100000000
+      min: 0
+  paginates:
+    admin: 10
+blob:
+  size:
+    small: [800, 600]
+    large: [1024, 768]
