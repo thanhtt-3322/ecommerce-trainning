@@ -3,7 +3,7 @@ class Admin::ProductsController < ApplicationController
   before_action :load_categories, only: %i(new edit)
   
   def index
-    @pagy, @products = pagy(Product.all, items: Settings.product.paginates.admin)
+    @pagy, @products = pagy(Product.all, items: Settings.product.paginates)
   end
 
   def new
@@ -40,10 +40,6 @@ class Admin::ProductsController < ApplicationController
     
     flash[:error] = "Product isn't exist!"
     redirect_to action: :index
-  end
-
-  def load_categories
-    @categories = Category.all
   end
 
   def product_params

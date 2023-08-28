@@ -13,9 +13,12 @@ product:
     price:
       max: 100000000
       min: 0
-  paginates:
-    admin: 10
+  paginates: 12
 blob:
   size:
     small: [800, 600]
     large: [1024, 768]
+display:
+  product_name: 40
+  slides:
+    product_items: 15
