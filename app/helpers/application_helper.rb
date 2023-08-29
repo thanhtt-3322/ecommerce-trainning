@@ -24,4 +24,8 @@ module ApplicationHelper
   def has_image(item)
     item.image.attached?
   end
+
+  def total_cart(prodcuts)
+    prodcuts.sum { |product| product.price * @cart_items[product.id.to_s] }
+  end
 end

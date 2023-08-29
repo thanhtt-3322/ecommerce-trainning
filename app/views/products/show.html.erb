@@ -14,12 +14,14 @@
         <div class="product__details__text">
           <h3><%= @product.name %></h3>
           <div class="product__details__price"><%= number_to_currency(@product.price) %></div>
-          <form>
-            <fieldset data-quantity>
-              <legend>Change quantity</legend>
-            </fieldset>
-          </form>
-          <%= link_to "ADD TO CART", root_path, class: "btn btn-primary add-to-cart-button custom-btn-primary mt-3 mx-3" %>
+          <%= form_with url: cart_path(product_id: @product.id) do |form| %>
+            <div class="qty quantity-scope mt-5">
+              <span class="js-minus minus bg-dark">-</span>
+              <%= form.number_field :quantity, class: "form-control count", value: Settings.cart.default_value, readonly: true %>
+              <span class="js-plus plus bg-dark">+</span>
+            </div>
+            <%= form.submit "ADD TO CART", class: "btn btn-primary add-to-cart-button custom-btn-primary mt-3" %>
+          <% end %>
           <ul>
             <li><b>Availability</b> <span>In Stock</span></li>
             <li><b>Shipping</b> <span>Yes</span></li>
