@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "/signin", to: "sessions#new", as: "session"
   post "/signin", to: "sessions#create"
   delete "/signout", to: "sessions#destroy"
+  
+  resources :products, only: %i(index show)
 
   namespace :admin do
     get "/home", to: "admin_home#index"

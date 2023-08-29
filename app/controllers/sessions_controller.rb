@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   include SessionsAction
 
+  before_action :load_categories, only: :new 
+
   def new; end
 
   def create
