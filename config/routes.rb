@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   resource :cart, only: [:show, :create, :update, :destroy]
   
-  resources :products, only: %i(index show)
+  resources :products, only: %i(index show) do
+    collection do
+      get "search"
+    end
+  end
 
   namespace :admin do
     get "/home", to: "admin_home#index"

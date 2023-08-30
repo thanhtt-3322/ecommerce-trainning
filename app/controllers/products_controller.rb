@@ -1,12 +1,21 @@
 class ProductsController < ApplicationController
   before_action :load_product, only: %i(show)
-  before_action :load_categories, only: %i(index show)
+  before_action :load_categories, only: %i(index show search)
 
   def index
     @pagy, @products = pagy(load_products, items: Settings.product.paginates)
   end
 
   def show; end
+
+  def search
+    @search_term = params[:search_term]
+    products = Product.joins(:action_text_rich_text, :category)
+                                  .where("products.name LIKE :search OR action_text_rich_texts.body LIKE :search OR categories.name LIKE :search",
+                                  search: "%#{@search_term}%")
+    @pagy, @products = pagy(products, items: Settings.product.paginates)
+    render :index
+  end
 
   private
 

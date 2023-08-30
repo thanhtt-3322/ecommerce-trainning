@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :category
   has_many :order_items, dependent: :destroy
+  has_one :action_text_rich_text, class_name: "ActionText::RichText", as: :record
 
   validates :name, presence: true, length: { maximum: Settings.product.validates.name.max }
   validates :price, presence: true, numericality: { greater_than: Settings.product.validates.price.min,
