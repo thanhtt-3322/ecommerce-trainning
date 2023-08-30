@@ -22,3 +22,5 @@ display:
   product_name: 40
   slides:
     product_items: 15
+cart:
+  default_value: 1

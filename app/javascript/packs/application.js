@@ -10,5 +10,6 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+require("quantity_input")
 require("@rails/actiontext")
 require("trix")
