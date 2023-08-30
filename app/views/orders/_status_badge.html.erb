@@ -1,0 +1,10 @@
+<% case status.to_sym %>
+  <% when :wait_confirm %>
+    <span class="badge text-bg-warning mb-3">Wait Confirm</span>
+  <% when :delivering %>
+    <span class="badge text-bg-primary mb-3">Delivering</span>
+  <% when :completed %>
+    <span class="badge text-bg-success mb-3">Completed</span>
+  <% when :canceled %>
+    <span class="badge text-bg-danger mb-3">Canceled</span>
+<% end %>

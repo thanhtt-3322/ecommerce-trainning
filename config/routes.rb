@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   delete "/signout", to: "sessions#destroy"
 
   resource :cart, only: [:show, :create, :update, :destroy]
+
+  resources :orders, only: [:index, :create, :update, :destroy]
   
   resources :products, only: %i(index show) do
     collection do
