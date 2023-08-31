@@ -5,6 +5,7 @@ class CartsController < ApplicationController
 
   def show
     @products = Product.where(id: @cart_items.keys)
+    @order = Order.new if @products.any?
   end
 
   def create

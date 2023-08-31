@@ -48,3 +48,9 @@ en:
           title: "Update Product"
           status:
             success_message: "Successfully Updated!"
+  display:
+    order_status:
+      wait_confirm: "Waiting for Confirmation"
+      delivering: "Being Delivered"
+      completed: "Completed"
+      canceled: "Canceled"
