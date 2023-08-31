@@ -11,9 +11,12 @@
 
   <body>
     <div class="container">
-      <%= render partial: "shared/header" %>
-      <%= render "shared/flash_messages" %>
-      <%= yield %>
+      <div class="wrapper">
+        <%= render "shared/header" %>
+        <%= render "shared/flash_messages" %>
+        <%= yield %>
+      </div>
+      <%= render "shared/footer" %>
     </div>
   </body>
 </html>

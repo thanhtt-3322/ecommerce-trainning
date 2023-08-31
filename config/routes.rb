@@ -17,5 +17,6 @@ Rails.application.routes.draw do
     
     resources :products, except: %i(show destroy)
     resources :orders, only: %i(index edit update)
+    resources :users, only: %i(index update)
   end
 end
