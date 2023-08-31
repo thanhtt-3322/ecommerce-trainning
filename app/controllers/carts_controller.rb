@@ -5,6 +5,7 @@ class CartsController < ApplicationController
 
   def show
     @products = Product.where(id: @cart_items.keys)
+    @order = Order.new if @products.any?
   end
 
   def create
@@ -22,16 +23,5 @@ class CartsController < ApplicationController
     @cart_items.delete(params[:product_id])
     flash[:notice] = "Product removed from cart!"
     redirect_to action: :show
-  end
-
-  private
-
-  def reload_cart
-    cookies[:cart_items] = @cart_items.to_json
-  end
-
-  def cart_items
-    cart_items_string = cookies[:cart_items]
-    @cart_items = cart_items_string.present? ? JSON.parse(cart_items_string) : {}
   end
 end

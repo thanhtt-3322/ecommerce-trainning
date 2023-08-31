@@ -5,6 +5,15 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def reload_cart
+    cookies[:cart_items] = @cart_items.to_json
+  end
+  
+  def cart_items
+    cart_items_string = cookies[:cart_items]
+    @cart_items = cart_items_string.present? ? JSON.parse(cart_items_string) : {}
+  end
+
   def load_categories
     @categories = Category.all
   end
