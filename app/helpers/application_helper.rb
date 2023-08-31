@@ -35,6 +35,10 @@ module ApplicationHelper
       "danger"
     end
   end
+
+  def status_order_selection
+    Order.statuses.map { |key, value| [t("display.order_status.#{key}"), value] }
+  end
   
   def has_image(item)
     item.image.attached?
