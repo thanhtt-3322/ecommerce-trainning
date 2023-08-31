@@ -9,7 +9,7 @@
       <h4>Order</h4>
       <%= form_for @order, method: :post do |form| %>
         <%= form.label :address, "Address" %>
-        <%= form.text_area :address, class: "form-control", rows: 3 %>       
+        <%= form.text_area :address, class: "form-control", rows: 3 %>
         <%= form.label :phone, "Phone" %>
         <%= form.text_field :phone, class: "form-control" %>
         <%= form.submit "Place Order", class: "btn btn-primary mt-3" %>

@@ -29,11 +29,13 @@ module ApplicationHelper
       "primary"
     when :completed
       "success"
-    when :info
-      "alert-info"
     else
       "danger"
     end
+  end
+
+  def status_order_selection
+    Order.statuses.keys.map { |key| [t("display.order_status.#{key}"), key] }
   end
   
   def has_image(item)

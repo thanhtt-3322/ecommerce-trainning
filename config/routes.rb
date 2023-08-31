@@ -16,5 +16,7 @@ Rails.application.routes.draw do
     get "/home", to: "admin_home#index"
     
     resources :products, except: %i(show destroy)
+    resources :orders, only: %i(index edit update)
+    resources :users, only: %i(index update)
   end
 end

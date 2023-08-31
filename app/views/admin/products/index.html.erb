@@ -1,7 +1,14 @@
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h2><%= t "admin.crud.product.title" %></h2>
-    <%= link_to "Create", new_admin_product_path, class: "btn btn-primary" %>
+    <div class="d-flex align-items-center">
+      <%= form_with url: admin_products_path, method: :get do |form| %>
+        <%= form.select :category_id, options_for_select(Category.all.map {|category| [category.name, category.id]}, params[:category_id]), 
+                          { include_blank: "Select a Category" }, class: "form-select", onchange: "this.form.submit();" %>
+
+      <% end %>
+      <%= link_to "Create", new_admin_product_path, class: "btn btn-primary ms-2" %>
+    </div>
   </div>
   <table class="table">
     <thead>

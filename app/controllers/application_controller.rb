@@ -2,9 +2,20 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
 
   helper_method :current_user
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, alert: exception.message
+  end
   
   private
 
+  def current_ability
+    controller_name_segments = params[:controller].split('/')
+    controller_name_segments.pop
+    controller_namespace = controller_name_segments.join('/').camelize
+    @current_ability ||= Ability.new(current_user, controller_namespace)
+  end
+  
   def reload_cart
     cookies[:cart_items] = @cart_items.to_json
   end

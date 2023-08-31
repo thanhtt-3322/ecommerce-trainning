@@ -1,11 +1,11 @@
 class OrdersController < ApplicationController
+  authorize_resource
+
   before_action :load_categories, only: :index
   before_action :cart_items, only: :create
   before_action :load_order, only: :update
 
   def index
-    return redirect_to root_path if current_user.nil?
-    
     @pagy, @orders = pagy(load_orders, items: Settings.order.paginates)
   end
 
@@ -18,6 +18,8 @@ class OrdersController < ApplicationController
         cookies.delete(:cart_items)
         flash[:success] = "Order successfully placed! Please check your email to track the notification"
         redirect_to orders_path
+  
+        send_mail_place_order
       end
     rescue ActiveRecord::RecordNotFound => e
       reload_cart
@@ -32,7 +34,7 @@ class OrdersController < ApplicationController
   def update
     return redirect_to orders_path, flash: { error: "Unable to cancel order when status isn't 'Wait for confirmation'" } unless @order.wait_confirm?
 
-    @order.canceled!
+    @order.update(reason_description: order_params[:reason_description], status: "canceled")
     flash[:success] = "Order was successfully canceled!"
     redirect_to orders_path
   end
@@ -46,6 +48,10 @@ class OrdersController < ApplicationController
     redirect_to action: :index
   end
 
+  def send_mail_place_order
+    OrderMailer.with(order: @order).place_order.deliver_now
+  end
+
   def build_order_items_from_cart
     @cart_items.each do |product_id, quantity|
       product = Product.find_by(id: product_id)
@@ -53,7 +59,7 @@ class OrdersController < ApplicationController
         @cart_items.delete(product_id)        
         raise ActiveRecord::RecordNotFound, "Product not found"
       end
- 
+  
       @order.order_items.build(product: product, quantity: quantity, price: product.price)
     end
   end
@@ -61,7 +67,7 @@ class OrdersController < ApplicationController
   def load_orders
     return current_user.orders unless params[:status]
 
-    current_user.orders.where(status: params[:status])
+   current_user.orders.where(status: params[:status])
   end
 
   def order_params

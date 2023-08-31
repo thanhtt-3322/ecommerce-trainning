@@ -1,9 +1,11 @@
 class Admin::ProductsController < ApplicationController
+  authorize_resource
+
   before_action :load_product, only: %i(edit update)
   before_action :load_categories, only: %i(new edit)
   
   def index
-    @pagy, @products = pagy(Product.all, items: Settings.product.paginates)
+    @pagy, @products = pagy(load_products, items: Settings.product.paginates)
   end
 
   def new
@@ -34,6 +36,12 @@ class Admin::ProductsController < ApplicationController
   end
 
   private
+
+  def load_products
+    return Product.where(category_id: params[:category_id]) if params[:category_id].present?
+
+    Product.all
+  end
 
   def load_product
     return if @product = Product.find_by(id: params[:id])
