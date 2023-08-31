@@ -63,3 +63,19 @@
 .carousel-caption a.btn {
   margin-top: 10px;
 }
+
+.text-green {
+  color: green;
+}
+
+#js-cancel-reason {
+  display: none;
+}
+
+.cancellation-reason {
+  border: 1px solid #e74c3c; /* Tạo đường viền đỏ xung quanh */
+  padding: 10px; /* Khoảng cách giữa nội dung và đường viền */
+  background-color: #ffdfe4; /* Màu nền hightlight */
+  color: #e74c3c; /* Màu chữ đỏ */
+  border-radius: 5px; /* Bo góc */
+}

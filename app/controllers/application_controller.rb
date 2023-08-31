@@ -5,6 +5,23 @@ class ApplicationController < ActionController::Base
   
   private
 
+  def authenticate_user
+    unless current_user
+      store_location
+      flash[:alert] = "You must be logged in to access this page!"
+      redirect_to session_path
+    end
+  end
+  
+  def reload_cart
+    cookies[:cart_items] = @cart_items.to_json
+  end
+  
+  def cart_items
+    cart_items_string = cookies[:cart_items]
+    @cart_items = cart_items_string.present? ? JSON.parse(cart_items_string) : {}
+  end
+
   def load_categories
     @categories = Category.all
   end

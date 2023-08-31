@@ -20,6 +20,23 @@ module ApplicationHelper
       flash_type.to_s
     end
   end
+
+  def status_badge(status)
+    case status.to_sym
+    when :wait_confirm
+      "warning"
+    when :delivering
+      "primary"
+    when :completed
+      "success"
+    else
+      "danger"
+    end
+  end
+
+  def status_order_selection
+    Order.statuses.keys.map { |key| [t("display.order_status.#{key}"), key] }
+  end
   
   def has_image(item)
     item.image.attached?

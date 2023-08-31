@@ -1,4 +1,8 @@
 class Admin::ProductsController < ApplicationController
+  include AuthorizationAction
+
+  before_action :authenticate_user
+  before_action :require_role_admin
   before_action :load_product, only: %i(edit update)
   before_action :load_categories, only: %i(new edit)
   

@@ -24,3 +24,8 @@ display:
     product_items: 15
 cart:
   default_value: 1
+order:
+  paginates: 5
+  admin:
+    paginates: 5
+date_format: "%B %d, %Y %I:%M %p"
