@@ -19,7 +19,7 @@ en:
     title: "Sign In"
     sign_up_now: "Sign up now!"
     success_message: "Signed in successfully!"
-    error_message: "Email or password is invalid!"
+    error_message: "Email or password is invalid Or Your account no longer has access to these!"
   sign_out:
     title: "Sign Out"
     success_message: "Logged out!"

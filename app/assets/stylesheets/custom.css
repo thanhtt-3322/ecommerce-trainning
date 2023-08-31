@@ -26,7 +26,7 @@
 }
 
 .carousel-item .card {
-  width: 300px;
+  width: 280px;
   height: 400px;
 }
 
@@ -66,4 +66,16 @@
 
 .text-green {
   color: green;
+}
+
+.cancel-reason {
+  display: none;
+}
+
+.cancellation-reason {
+  border: 1px solid #e74c3c;
+  padding: 10px;
+  background-color: #ffdfe4;
+  color: #e74c3c;
+  border-radius: 5px;
 }

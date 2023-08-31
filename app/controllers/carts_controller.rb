@@ -1,5 +1,4 @@
 class CartsController < ApplicationController
-  before_action :load_categories, only: %i(show update)
   before_action :cart_items
   after_action :reload_cart
 

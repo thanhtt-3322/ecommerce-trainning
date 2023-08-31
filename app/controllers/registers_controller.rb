@@ -1,8 +1,6 @@
 class RegistersController < ApplicationController
   include SessionsAction
 
-  before_action :load_categories, only: :new
-
   def new
     @user = User.new
   end
