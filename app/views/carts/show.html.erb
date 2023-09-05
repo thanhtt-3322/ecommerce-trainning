@@ -7,16 +7,11 @@
   <% else %>
     <div class="col-lg-4 col-md-12">
       <h4>Order</h4>
-      <%= form_with url: root_path, method: :post do |form| %>
-        <%= form.label :name, "Name" %>
-        <%= form.text_field :name, class: "form-control" %>
-        
+      <%= form_for @order, method: :post do |form| %>
         <%= form.label :address, "Address" %>
-        <%= form.text_area :address, class: "form-control", rows: 3 %>
-        
+        <%= form.text_area :address, class: "form-control", rows: 3 %>       
         <%= form.label :phone, "Phone" %>
         <%= form.text_field :phone, class: "form-control" %>
-        
         <%= form.submit "Place Order", class: "btn btn-primary mt-3" %>
       <% end %>
     </div>

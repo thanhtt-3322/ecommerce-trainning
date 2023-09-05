@@ -20,6 +20,21 @@ module ApplicationHelper
       flash_type.to_s
     end
   end
+
+  def status_badge(status)
+    case status.to_sym
+    when :wait_confirm
+      "warning"
+    when :delivering
+      "primary"
+    when :completed
+      "success"
+    when :info
+      "alert-info"
+    else
+      "danger"
+    end
+  end
   
   def has_image(item)
     item.image.attached?

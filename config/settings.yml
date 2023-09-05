@@ -24,3 +24,5 @@ display:
     product_items: 15
 cart:
   default_value: 1
+order:
+  paginates: 5
