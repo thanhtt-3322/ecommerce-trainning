@@ -54,3 +54,8 @@ en:
       delivering: "Being Delivered"
       completed: "Completed"
       canceled: "Canceled"
+  mailer:
+    subject:
+      confirm_order: "Order Confirmation From Pet Store"
+      place_order: "Order successfully placed"
+      reject_order: "Order Rejected"

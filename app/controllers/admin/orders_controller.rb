@@ -13,6 +13,9 @@ class Admin::OrdersController < Admin::ApplicationController
     if @order.update(order_params)
       flash[:success] = "Order status updated successfully!"
       redirect_to admin_orders_path
+
+      send_mail :confirm_order if @order.delivering?
+      send_mail :reject_order if @order.canceled?
     else
       flash.now[:error] = "Failed to update order status!"
       render :edit
@@ -20,6 +23,10 @@ class Admin::OrdersController < Admin::ApplicationController
   end
 
   private
+
+  def send_mail(action)
+    OrderMailer.with(order: @order).send(action).deliver_later
+  end
 
   def load_order
     return if @order = Order.find_by(id: params[:id])
