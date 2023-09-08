@@ -1,17 +1,18 @@
 class OrdersController < ApplicationController
-  before_action :load_categories, only: :index
+  authorize_resource
+
   before_action :cart_items, only: :create
   before_action :load_order, only: :update
-
+  before_action :handle_wait_confirm, only: :update
+  
   def index
-    return redirect_to root_path if current_user.nil?
-    
     @pagy, @orders = pagy(load_orders, items: Settings.order.paginates)
   end
 
   def create
     @order = current_user.orders.build(order_params)
     begin
+      raise ActiveRecord::RecordNotFound, "Products not found" if @cart_items.blank?
       build_order_items_from_cart
       ActiveRecord::Base.transaction do
         @order.save!
@@ -30,14 +31,22 @@ class OrdersController < ApplicationController
   end
 
   def update
-    return redirect_to orders_path, flash: { error: "Unable to cancel order when status isn't 'Wait for confirmation'" } unless @order.wait_confirm?
-
-    @order.canceled!
-    flash[:success] = "Order was successfully canceled!"
+    if @order.update(reason_description: order_params[:reason_description], status: "canceled")
+      flash[:success] = "Order was successfully canceled!"
+    else
+      flash[:error] = "Failed to update order status!"
+    end
     redirect_to orders_path
   end
 
   private
+
+  def handle_wait_confirm
+    return if @order.wait_confirm?
+
+    flash[:error] = "Unable to cancel order when status isn't 'Wait for confirmation'"
+    redirect_to action: :index
+  end
 
   def load_order
     return if @order = Order.find_by(id: params[:id])

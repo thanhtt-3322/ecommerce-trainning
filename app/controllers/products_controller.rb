@@ -1,12 +1,18 @@
 class ProductsController < ApplicationController
+  authorize_resource
+
   before_action :load_product, only: %i(show)
-  before_action :load_categories, only: %i(index show search)
 
   def index
     @pagy, @products = pagy(list_product, items: Settings.product.paginates)
   end
 
-  def show; end
+  def show
+    return if @product.enabled?
+
+    flash[:error] = "The product has been disabled and is not visible on websites"
+    redirect_to action: :index
+  end
 
   private
 
@@ -22,6 +28,6 @@ class ProductsController < ApplicationController
 
     return Product.enabled.where(category_id: params[:category_id]) if params[:category_id]
 
-    Product.all 
+    Product.enabled
   end
 end

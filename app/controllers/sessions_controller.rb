@@ -1,12 +1,10 @@
 class SessionsController < ApplicationController
   include SessionsAction
 
-  before_action :load_categories, only: :new 
-
   def new; end
 
   def create
-    user = User.find_by(email: params[:email])
+    user = User.enabled.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       sign_in user
       flash[:success] = t("sign_in.success_message")

@@ -1,9 +1,10 @@
-class Admin::ProductsController < ApplicationController
-  before_action :load_product, only: %i(edit update)
-  before_action :load_categories, only: %i(new edit)
+class Admin::ProductsController < Admin::ApplicationController
+  authorize_resource
   
+  before_action :load_product, only: %i(edit update)
+
   def index
-    @pagy, @products = pagy(Product.all, items: Settings.product.paginates)
+    @pagy, @products = pagy(load_products, items: Settings.product.paginates)
   end
 
   def new
@@ -16,7 +17,6 @@ class Admin::ProductsController < ApplicationController
       flash[:success] = t("admin.crud.product.success_message")
       redirect_to action: :index
     else
-      load_categories
       render :new
     end
   end
@@ -28,18 +28,16 @@ class Admin::ProductsController < ApplicationController
       flash[:success] = t("admin.crud.product.success_message")
       redirect_to admin_products_path
     else
-      load_categories
       render :edit
     end
   end
 
   private
 
-  def load_product
-    return if @product = Product.find_by(id: params[:id])
-    
-    flash[:error] = "Product isn't exist!"
-    redirect_to action: :index
+  def load_products
+    return Product.all if params[:category_id].blank?
+
+    Product.where(category_id: params[:category_id]) 
   end
 
   def product_params

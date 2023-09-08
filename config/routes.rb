@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   resources :products, only: %i(index show)
 
   namespace :admin do
-    get "/home", to: "admin_home#index"
+    get "/home", to: "home#index"
     
     resources :products, except: %i(show destroy)
+    resources :orders, only: %i(index edit update)
   end
 end
