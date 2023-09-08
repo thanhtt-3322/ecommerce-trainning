@@ -29,3 +29,5 @@ order:
   admin:
     paginates: 5
 date_format: "%B %d, %Y %I:%M %p"
+mailer:
+  from: tran.trung.thanh@sun-asterisk.com

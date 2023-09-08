@@ -19,6 +19,8 @@ class OrdersController < ApplicationController
         cookies.delete(:cart_items)
         flash[:success] = "Order successfully placed! Please check your email to track the notification"
         redirect_to orders_path
+ 
+        send_mail_place_order
       end
     rescue ActiveRecord::RecordNotFound => e
       reload_cart
@@ -53,6 +55,10 @@ class OrdersController < ApplicationController
 
     flash[:error] = "Order not found"
     redirect_to action: :index
+  end
+
+  def send_mail_place_order
+    OrderMailer.with(order: @order).place_order.deliver_now
   end
 
   def build_order_items_from_cart
