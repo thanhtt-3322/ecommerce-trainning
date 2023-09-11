@@ -34,6 +34,10 @@ module ApplicationHelper
     end
   end
 
+  def category_selection
+    Category.all.map {|category| [category.name, category.id] }
+  end
+
   def status_order_selection
     Order.statuses.keys.map { |key| [t("display.order_status.#{key}"), key] }
   end

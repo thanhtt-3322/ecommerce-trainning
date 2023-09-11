@@ -23,6 +23,7 @@
             <%= form.submit "ADD TO CART", class: "btn btn-primary add-to-cart-button custom-btn-primary mt-3" %>
           <% end %>
           <ul>
+            <li><b>Sold: </b> <span><%= number_with_delimiter(@product.sold, delimiter: ",") %></span></li>
             <li><b>Availability</b> <span>In Stock</span></li>
             <li><b>Shipping</b> <span>Yes</span></li>
           </ul>

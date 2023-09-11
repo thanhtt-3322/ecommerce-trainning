@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   def cart_items
     cart_items_string = cookies[:cart_items]
     @cart_items = cart_items_string.present? ? JSON.parse(cart_items_string) : {}
-  
+
     @cart_items.reject! do |product_id, quantity|
       Product.enabled.find_by(id: product_id).blank?
     end
@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   def load_product
     return if @product = Product.find_by(id: params[:id])
-    
+
     flash[:error] = "Product isn't exist!"
     redirect_to action: :index
   end

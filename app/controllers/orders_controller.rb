@@ -68,7 +68,7 @@ class OrdersController < ApplicationController
         @cart_items.delete(product_id)        
         raise ActiveRecord::RecordNotFound, "Product not found"
       end
- 
+
       @order.order_items.build(product: product, quantity: quantity, price: product.price)
     end
   end
