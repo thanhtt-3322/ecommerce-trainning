@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   authorize_resource
 
+  before_action :authenticate_user!
   before_action :cart_items, only: :create
   before_action :load_order, only: :update
   before_action :handle_wait_confirm, only: :update

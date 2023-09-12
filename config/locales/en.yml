@@ -59,3 +59,6 @@ en:
       confirm_order: "Order Confirmation From Pet Store"
       place_order: "Order successfully placed"
       reject_order: "Order Rejected"
+  links:
+    forgot_password: "Forgot your password?"
+    confirmation: "Didn't receive confirmation instructions?"
