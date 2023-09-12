@@ -49,4 +49,26 @@ module ApplicationHelper
   def total_cart(prodcuts)
     prodcuts.sum { |product| product.price * @cart_items[product.id.to_s] }
   end
+
+  def link_not_receive_unlock?
+    devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) &&
+                                controller_name != "unlocks"
+  end
+
+  def link_not_receive_confirm?
+    devise_mapping.confirmable? && controller_name != "confirmations"
+  end
+
+  def link_forgot_password?
+    devise_mapping.recoverable? && controller_name != "passwords" &&
+                                  controller_name != "registers"
+  end
+
+  def link_sign_up?
+    devise_mapping.registerable? && controller_name != "registers"
+  end
+
+  def link_sessions?
+    controller_name != "sessions"
+  end
 end
