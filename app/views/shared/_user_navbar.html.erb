@@ -28,19 +28,16 @@
             <ul class="dropdown-menu">
               <li><%= link_to t("navbar.user.order_history"), orders_path, class:"nav-link" %></li>
               <li><hr class="dropdown-divider"></li>
-              <li><%= button_to t("sign_out.title"), signout_path, method: "delete", class: "dropdown-item" %></li>
+              <li><%= button_to t("sign_out.title"), destroy_user_session_path, method: "delete", class: "dropdown-item" %></li>
             </ul>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to t("sign_in.title"), session_path, class: "nav-link" %>
+            <%= link_to t("sign_in.title"), new_user_session_path, class: "nav-link" %>
           </li>        
         <% end %>
       </ul>
-      <%= form_with url: products_path, class: "d-flex", method: :get do |f| %>
-        <%= f.text_field :search_term, placeholder: "Search products...", class: "form-control me-2" %>
-        <%= f.submit "Search", class: "btn btn-outline-success" %>
-      <% end %>
+      <%= link_to "Search", products_path, class: "btn btn-outline-success" %>
     </div>
   </div>
 </nav>

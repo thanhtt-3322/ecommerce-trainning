@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   authorize_resource
 
+  before_action :authenticate_user!
   before_action :cart_items, only: :create
   before_action :load_order, only: :update
   before_action :handle_wait_confirm, only: :update
@@ -58,7 +59,7 @@ class OrdersController < ApplicationController
   end
 
   def send_mail_place_order
-    OrderMailer.with(order: @order).place_order.deliver_now
+    OrderMailer.with(order: @order.id).place_order.deliver_later
   end
 
   def build_order_items_from_cart

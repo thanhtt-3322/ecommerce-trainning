@@ -1,3 +1,5 @@
 class Category < ApplicationRecord
-  has_many :products, dependent: :destroy 
+  RANSACABLE_ATTRIBUTES = %w(id name)
+
+  has_many :products, dependent: :destroy
 end

@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  RANSACABLE_ATTRIBUTES = %w(name price body)
+  RANSACABLE_ASSOCIATIONS = %w(action_text_rich_text category)
+
   belongs_to :category
   has_many :order_items, dependent: :destroy
   has_one :action_text_rich_text, class_name: "ActionText::RichText", as: :record
