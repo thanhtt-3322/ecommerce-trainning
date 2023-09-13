@@ -9,6 +9,12 @@
         <li class="nav-item">
           <%= link_to t("navbar.user.cart"), cart_path, class:"nav-link" %>
         </li>
+        <li class="nav-item">
+          <%= link_to "Sidekiq", sidekiq_web_path, class:"nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= button_to "Do BGJ", hello_path, remote: true, class:"nav-link" %>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <%= "Categories" %>

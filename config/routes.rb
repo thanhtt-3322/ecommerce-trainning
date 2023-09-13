@@ -1,4 +1,8 @@
+require "sidekiq/web"
 Rails.application.routes.draw do
+  mount Sidekiq::Web => "/sidekiq"
+  post "hello", to: "home#hello"
+
   root "home#index"
 
   get "/signup", to: "registers#new", as: "signup"
