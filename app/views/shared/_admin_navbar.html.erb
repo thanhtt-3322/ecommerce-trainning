@@ -22,7 +22,7 @@
             <%= current_user.name %>
           </button>
           <ul class="dropdown-menu">
-            <li><%= button_to t("sign_out.title"), signout_path, method: "delete", class: "dropdown-item" %></li>
+            <li><%= button_to t("sign_out.title"), destroy_user_session_path, method: "delete", class: "dropdown-item" %></li>
           </ul>
         </div>
     </div>

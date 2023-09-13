@@ -31,3 +31,7 @@ order:
 date_format: "%B %d, %Y %I:%M %p"
 mailer:
   from: tran.trung.thanh@sun-asterisk.com
+devise:
+  email: !ruby/regexp '/\A[^@\s]+@[^@\s]+\z/'
+  cost: 12
+  maximum_attempts: 3
