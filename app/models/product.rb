@@ -21,4 +21,12 @@ class Product < ApplicationRecord
 
   has_one_attached :image, dependent: :destroy
   has_rich_text :body
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name description price body]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["action_text_rich_text", "category", "image_attachment", "image_blob", "order_items", "rich_text_body"]
+  end
 end

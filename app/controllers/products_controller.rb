@@ -4,7 +4,9 @@ class ProductsController < ApplicationController
   before_action :load_product, only: %i(show)
 
   def index
-    @pagy, @products = pagy(list_product, items: Settings.product.paginates)
+    @q = Product.ransack(params[:q])
+    # @products = @q.result(distinct: true)
+    @pagy, @products = pagy(@q.result(), items: Settings.product.paginates)
   end
 
   def show
