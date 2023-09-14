@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
   end
 
   def send_mail_place_order
-    OrderMailer.with(order: @order).place_order.deliver_now
+    OrderMailer.with(order: @order.id).place_order.deliver_later
   end
 
   def build_order_items_from_cart
