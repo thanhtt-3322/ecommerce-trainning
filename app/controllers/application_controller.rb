@@ -1,11 +1,15 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
-  helper_method :current_user, :load_categories
+  helper_method :load_categories
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
     redirect_to root_url
+  end
+
+  def after_sign_in_path_for(resource)
+    resource.admin? ? admin_home_path : root_path
   end
 
   private
@@ -32,10 +36,6 @@ class ApplicationController < ActionController::Base
 
     flash[:error] = "Product isn't exist!"
     redirect_to action: :index
-  end
-
-  def current_user
-    @current_user ||= session[:remember_token] && User.find_by_remember_token(session[:remember_token])
   end
 
   def redirect_back_or(default)
