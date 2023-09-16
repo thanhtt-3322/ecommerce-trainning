@@ -10,6 +10,10 @@ class User < ApplicationRecord
   enum role: %i(user admin)
   enum status: %i(enabled disabled)
 
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+
   def confirmation_required?
     return false if admin?
     super

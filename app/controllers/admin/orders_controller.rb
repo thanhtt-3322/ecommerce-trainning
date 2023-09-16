@@ -25,7 +25,7 @@ class Admin::OrdersController < Admin::ApplicationController
   private
 
   def send_mail(action)
-    OrderMailer.with(order: @order).send(action).deliver_later
+    OrderMailer.with(order: @order.id).send(action).deliver_later
   end
 
   def load_order
