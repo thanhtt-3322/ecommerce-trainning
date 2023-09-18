@@ -14,6 +14,7 @@ gem "config"
 gem "image_processing"
 gem "pagy"
 gem "cancancan"
+gem "ransack"
 gem "devise"
 gem "sidekiq"
 

@@ -37,10 +37,7 @@
           </li>        
         <% end %>
       </ul>
-      <%= form_with url: products_path, class: "d-flex", method: :get do |f| %>
-        <%= f.text_field :search_term, placeholder: "Search products...", class: "form-control me-2" %>
-        <%= f.submit "Search", class: "btn btn-outline-success" %>
-      <% end %>
+      <%= link_to "Search", products_path, class: "btn btn-outline-success" %>
     </div>
   </div>
 </nav>
