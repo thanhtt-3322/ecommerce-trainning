@@ -18,6 +18,7 @@ gem "ransack"
 gem "devise"
 gem "sidekiq"
 gem "simplecov", require: false, group: :test
+gem "figaro"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]

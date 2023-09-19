@@ -10,7 +10,7 @@ class Order < ApplicationRecord
 
   enum status: %i(wait_confirm delivering completed canceled)
 
-  scope :this_month, -> { where(created_at: Time.zone.now.beginning_of_month..Time.zone.now.end_of_month) }
+  scope :this_month, -> { where(created_at: Time.zone.now.all_month) }
   default_scope { order(id: :desc) }
 
   private
