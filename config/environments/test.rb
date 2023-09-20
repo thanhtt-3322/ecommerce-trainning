@@ -58,7 +58,7 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
   config.action_mailer.perform_deliveries = true 
-  Rails.application.routes.default_url_options[:host] = "localhost:3000"
+  Rails.application.routes.default_url_options[:host] = ENV["RAILS_SERVER_URL"]
   config.action_mailer.delivery_method = :test
   config.active_job.queue_adapter = :test
 end
