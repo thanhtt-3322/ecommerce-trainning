@@ -17,7 +17,6 @@ gem "cancancan"
 gem "ransack"
 gem "devise"
 gem "sidekiq"
-gem "simplecov", require: false, group: :test
 gem "figaro"
 
 group :development, :test do
@@ -26,7 +25,13 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "faker"
+end
+
+group :test do
   gem "shoulda-matchers"
+  gem "rails-controller-testing"
+  gem "simplecov", require: false
+  gem "simplecov-rcov"
 end
 
 group :development do
