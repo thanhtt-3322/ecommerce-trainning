@@ -44,6 +44,11 @@ class OrdersController < ApplicationController
 
   private
 
+  def cart_items
+    cart_items_string = cookies[:cart_items]
+    @cart_items = cart_items_string.present? ? JSON.parse(cart_items_string) : {}
+  end
+  
   def handle_wait_confirm
     return if @order.wait_confirm?
 
