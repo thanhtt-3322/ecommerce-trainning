@@ -54,7 +54,7 @@ RSpec.describe CartsController, type: :controller do
         request.env["HTTP_REFERER"] = cart_path
         subject
       end
-  
+
       it do
         expect(flash[:notice]).to eq("Product added to cart!")
         expect(response).to redirect_to cart_path
@@ -62,7 +62,7 @@ RSpec.describe CartsController, type: :controller do
     end
   end
 
-  describe "PATCH #update" do    
+  describe "PATCH #update" do
     subject { patch :update, params: { product_id: product_1.id, quantity: 2 } }
 
     it_behaves_like "callbacks" do
@@ -71,7 +71,7 @@ RSpec.describe CartsController, type: :controller do
 
     context "when update success" do
       before { subject }
-  
+
       it { expect(response).to redirect_to cart_path }
     end
   end

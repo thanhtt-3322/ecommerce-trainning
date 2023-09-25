@@ -8,8 +8,8 @@ RSpec.describe ProductsController, type: :controller do
     before { get :index, params: { q: q_params } }
 
     context "when search with name/description" do
-      let(:q_params) do 
-        { 
+      let(:q_params) do
+        {
           name_or_action_text_rich_text_body_cont: product_1.name,
           category_id_eq: product_1.category.id
         }

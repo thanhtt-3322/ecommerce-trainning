@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe User, type: :model do
   let(:user) { FactoryBot.create :user }
-  
+
   describe "validates" do
     it do
       is_expected.to validate_presence_of(:name)
@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
 
       context "when user is role: admin" do
         let(:role) { :admin }
-        
+
         it { is_expected.to be false }
       end
 
@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
         it { is_expected.to be true }
       end
     end
-  
+
     describe "#active_for_authentication?" do
       subject { user.active_for_authentication? }
 
@@ -45,13 +45,13 @@ RSpec.describe User, type: :model do
 
       context "when user's status is enabled" do
         let(:status) { :enabled }
-        
+
         it { is_expected.to be true }
       end
 
       context "when user's status is disabled" do
         let(:status) { :disabled }
-        
+
         it { is_expected.to be false }
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe User, type: :model do
         allow(Devise.mailer).to receive(:confirmation_instructions).and_return(double(deliver_later: true))
         user.send_devise_notification(:confirmation_instructions)
       end
-  
+
       it {expect(Devise.mailer).to have_received(:confirmation_instructions).with(user)}
     end
   end

@@ -11,7 +11,9 @@ end
 
 SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
 
-SimpleCov.start "rails"
+SimpleCov.start "rails" do
+  enable_coverage :branch
+end
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
@@ -25,4 +27,6 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  Dir["./spec/shared/**/*.rb"].sort.each {|f| require f}
 end
