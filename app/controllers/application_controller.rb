@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include ActiveStorage::SetCurrent
   include Pagy::Backend
 
   helper_method :load_categories

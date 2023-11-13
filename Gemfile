@@ -18,6 +18,7 @@ gem "ransack"
 gem "devise"
 gem "sidekiq"
 gem "figaro"
+gem "rswag"
 
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
