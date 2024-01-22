@@ -1,0 +1,51 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+      - redis
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - gem_cache:/usr/local/bundle/gems
+      - node_modules:/app/node_modules
+    environment:
+      DATABASE_NAME: EcommerceDB
+      DATABASE_USER: root
+      DATABASE_PASSWORD: 12345678
+      DATABASE_HOST: localhost
+      REDIS_HOST: redis
+
+  database:
+    image: postgres:12.1
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.2
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - app
+      - database
+      - redis
+    volumes:
+      - .:/app
+      - gem_cache:/usr/local/bundle/gems
+      - node_modules:/app/node_modules
+    command: bash -c "bundle exec sidekiq"
+    environment:
+      RAILS_ENV: development
+
+volumes:
+  gem_cache:
+  db_data:
+  node_modules:
