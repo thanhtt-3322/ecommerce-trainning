@@ -1,6 +1,7 @@
 require "factory_bot_rails"
 require "simplecov"
 require "simplecov-rcov"
+require "shoulda/matchers"
 
 class SimpleCov::Formatter::MergedFormatter
   def format(result)

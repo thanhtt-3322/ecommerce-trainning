@@ -1,46 +1,47 @@
-FROM ruby:3.2-alpine
-ENV BUNDLER_VERSION=2.4.17
-RUN apk add --update --no-cache \
-      binutils-gold \
-      build-base \
-      curl \
-      file \
-      g++ \
-      gcc \
-      git \
-      less \
-      libstdc++ \
-      libffi-dev \
-      libc-dev \
-      linux-headers \
-      libxml2-dev \
-      libxslt-dev \
-      libgcrypt-dev \
-      make \
-      netcat-openbsd \
-      nodejs \
-      openssl \
-      pkgconfig \
-      postgresql-dev \
-      python \
-      tzdata \
-      yarn
+FROM ruby:3.2.2-alpine
 
+ARG RAILS_ENV
+ENV RAILS_ENV=development
+
+RUN apk update && apk add --no-cache build-base \
+                                     mysql-dev \
+                                     ruby-dev \
+                                     libc-dev \
+                                     linux-headers
+RUN apk update && apk add curl && apk add bash
+
+# Install Node 16.x
+RUN curl -sL https://deb.nodesource.com/setup_16.x
+RUN apk add --update nodejs npm
+
+# Install Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg
+RUN apk update && apk fetch gnupg && apk add gnupg && gpg --list-keys
+RUN apk update && apk add yarn
+RUN apk add libpq-dev
+
+# Install ImageMagick and libvips:
 RUN apk update && apk add --no-cache imagemagick
+RUN apk update && apk add --upgrade vips-dev
+RUN apk add --no-cache libc6-compat gcompat
 
-RUN gem install bundler -v BUNDLER_VERSION
+RUN mkdir /rails-app
+WORKDIR /rails-app
 
-WORKDIR /app
-COPY Gemfile Gemfile.lock ./
-RUN bundle config build.nokogiri --use-system-libraries
-RUN bundle check || bundle install
+RUN gem install bundler -v 2.4.17
+RUN gem install rails -v 6.1.7.4
 
-COPY package.json yarn.lock ./
-RUN yarn install --check-files
-COPY . ./
+# Adding gems
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
+RUN bundle install
 
-COPY ./entrypoints/docker-entrypoint.sh /usr/bin/
+COPY . .
 
-RUN chmod +x /usr/bin/docker-entrypoint.sh
+# # RUN rm -rf storage/* nod_modules config/application.yml tmp/cache log/*
 
-ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
+# COPY ./entrypoints/docker-entrypoint.sh /usr/bin/
+
+# RUN chmod +x /usr/bin/docker-entrypoint.sh
+
+# ENTRYPOINT ["docker-entrypoint.sh"]

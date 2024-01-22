@@ -1,51 +1,62 @@
-version: '3.4'
+version: '2.21'
 
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
     depends_on:
       - database
       - redis
     ports:
       - "3000:3000"
+    # command: bash -c "rm -f tmp/pids/server.pid && rails db:prepare && rails server -b 0.0.0.0"
     volumes:
-      - .:/app
-      - gem_cache:/usr/local/bundle/gems
-      - node_modules:/app/node_modules
+      - .:/rails-app
+    #   - gem_cache:/usr/local/bundle/gems
+    #   - node_modules:/rails-app/node_modules
     environment:
       DATABASE_NAME: EcommerceDB
       DATABASE_USER: root
       DATABASE_PASSWORD: 12345678
-      DATABASE_HOST: localhost
+      DATABASE_HOST: database
+      DATABASE_PORT: 3306
       REDIS_HOST: redis
+      REDIS_PORT: 6379
 
   database:
-    image: postgres:12.1
+    image: mysql:8.0
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: 12345678
+        - '3306:3306'
+    ports:
+      - "33061:3306"
 
   redis:
     image: redis:7.2
-
-  sidekiq:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - app
-      - database
-      - redis
+    command: redis-server
+    ports:
+      - 6379
     volumes:
-      - .:/app
-      - gem_cache:/usr/local/bundle/gems
-      - node_modules:/app/node_modules
-    command: bash -c "bundle exec sidekiq"
-    environment:
-      RAILS_ENV: development
+      - redis_data:/data
+
+  # sidekiq:
+  #   command: bash -c "bundle exec sidekiq"
+  #   depends_on:
+  #     - app
+  #     - database
+  #     - redis
+  #   environment:
+  #     RAILS_ENV: development
 
 volumes:
   gem_cache:
   db_data:
   node_modules:
+  redis_data:

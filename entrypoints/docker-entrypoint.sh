@@ -2,8 +2,6 @@
 
 set -e
 
-if [ -f tmp/pids/server.pid ]; then
-  rm tmp/pids/server.pid
-fi
+rm -f /rails-app/tmp/pids/server.pid
 
 bundle exec rails s -b 0.0.0.0
