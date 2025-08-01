@@ -39,7 +39,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-config/database.yml
 test/*
 /coverage
 /config/application.yml

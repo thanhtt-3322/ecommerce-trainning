@@ -25,20 +25,19 @@ RUN apk update && apk add --no-cache imagemagick
 RUN apk update && apk add --upgrade vips-dev
 RUN apk add --no-cache libc6-compat gcompat
 
-RUN mkdir /rails-app
-WORKDIR /rails-app
+RUN mkdir /app
+WORKDIR /app
 
 RUN gem install bundler -v 2.4.17
 RUN gem install rails -v 6.1.7.4
 
 # Adding gems
-COPY Gemfile Gemfile
-COPY Gemfile.lock Gemfile.lock
+COPY Gemfile* ./
 RUN bundle install
 
 COPY . .
 
-# # RUN rm -rf storage/* nod_modules config/application.yml tmp/cache log/*
+RUN rm -rf storage/* tmp/cache log/*
 
 # COPY ./entrypoints/docker-entrypoint.sh /usr/bin/
 

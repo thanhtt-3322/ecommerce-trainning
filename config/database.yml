@@ -1,0 +1,22 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+  port: <%= ENV.fetch("DATABASE_PORT", "3306") %>
+  username: <%= ENV.fetch("DATABASE_USER", "root") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", "password") %>
+  database: <%= ENV.fetch("DATABASE_NAME", "EcommerceDB") %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: EcommerceDB_test
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
