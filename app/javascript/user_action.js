@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  console.log("User action script loaded");
+
   $(".js-form-switch").on("change", function(){
     let confirm_message = "Are you sure you want to change the status?";
   
