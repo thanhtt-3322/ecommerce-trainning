@@ -23,7 +23,7 @@ jobs:
           docker compose build
 
           echo "🚀 Starting containers..."
-          docker ccompose up -d --remove-orphans
+          docker compose up -d --remove-orphans
 
           echo "✅ Deployment done."
           docker ps -a
