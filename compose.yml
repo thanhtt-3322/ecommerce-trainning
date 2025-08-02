@@ -1,8 +1,10 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: ttt141121/e-commerce-app:1.0
+    container_name: ecommerce_app
     tty: true
     stdin_open: true
     depends_on:
@@ -30,6 +32,7 @@ services:
 
   database:
     image: mysql:8.0
+    container_name: ecommerce_db
     volumes:
       - db_data:/var/lib/mysql
     environment:
@@ -48,6 +51,7 @@ services:
 
   redis:
     image: redis:7.2
+    container_name: ecommerce_redis
     command: redis-server
     ports:
       - 6379
@@ -57,9 +61,11 @@ services:
       - ecommerce-network
 
   sidekiq:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: ttt141121/e-commerce-app:1.0
+    container_name: ecommerce_sidekiq
     command: bash -c "bundle exec sidekiq"
     stdin_open: true
     tty: true
