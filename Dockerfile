@@ -37,7 +37,7 @@ RUN bundle install
 
 COPY . .
 
-RUN rm -rf storage/* tmp/cache log/*
+# RUN rm -rf storage/* tmp/cache log/*
 
 # COPY ./entrypoints/docker-entrypoint.sh /usr/bin/
 
