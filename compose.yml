@@ -7,7 +7,7 @@ services:
     container_name: ecommerce_app
     tty: true
     stdin_open: true
-    user: "1000:1000" # TODO: Only set to CD to avoid permission issues
+    # user: "1000:1000" # TODO: Only set to CD to avoid permission issues
     depends_on:
       database:
         condition: service_healthy
@@ -66,7 +66,7 @@ services:
     #   context: .
     #   dockerfile: Dockerfile
     image: ttt141121/e-commerce-app:1.0
-    user: "1000:1000" # TODO: Only set to CD to avoid permission issues
+    # user: "1000:1000" # TODO: Only set to CD to avoid permission issues
     container_name: ecommerce_sidekiq
     command: bash -c "bundle exec sidekiq"
     stdin_open: true
