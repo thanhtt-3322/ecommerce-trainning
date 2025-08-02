@@ -14,7 +14,7 @@ services:
         condition: service_started
     ports:
       - "3000:3000"
-    command: bash -c "rm -f tmp/pids/server.pid && rails db:prepare && bundle install && rails server -b 0.0.0.0"
+    # command: bash -c "rm -f tmp/pids/server.pid && rails db:prepare && bundle install && rails server -b 0.0.0.0"
     volumes:
       - .:/app
       - gem_cache:/usr/local/bundle/gems
