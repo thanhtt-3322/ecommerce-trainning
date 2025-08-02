@@ -16,9 +16,9 @@ services:
     ports:
       - "3000:3000"
     command: bash -c "rm -f tmp/pids/server.pid && rails db:prepare && bundle install && yarn install && rails server -b 0.0.0.0"
-    volumes:
+    # volumes:
       # - .:/app
-      - gem_cache:/usr/local/bundle/gems
+      # - gem_cache:/usr/local/bundle/gems
     environment:
       NODE_OPTIONS: "--openssl-legacy-provider"
       DATABASE_NAME: EcommerceDB
@@ -80,7 +80,7 @@ services:
       - ecommerce-network
 
 volumes:
-  gem_cache:
+  # gem_cache:
   db_data:
   redis_data:
 
