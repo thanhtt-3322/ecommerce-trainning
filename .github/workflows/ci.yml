@@ -1,0 +1,49 @@
+name: CI - Rails Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  rspec-unittest:
+    runs-on: ubuntu-latest
+    container: ruby:3.2.2-bullseye #https://docs.github.com/en/actions/tutorials/use-containerized-services/use-docker-service-containers#running-jobs-in-a-container
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 12345678
+          MYSQL_USERNAME: root
+          MYSQL_PASSWORD: 12345678
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      RAILS_ENV: test
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_USER: root
+      DATABASE_PASSWORD: 12345678
+
+    steps:
+      - name: 🛎️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: 🛠️ Setup DB
+        run: |
+          bundle exec rails db:create db:schema:load
+
+      - name: ✅ Run test rspec
+        run: |
+          bundle exec rspec
