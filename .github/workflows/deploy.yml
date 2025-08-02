@@ -8,22 +8,22 @@ on:
 jobs:
   deploy:
     name: Deploy to EC2
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: ⏬ Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔐 Setup SSH key
+      - name: 🧰 Deploy app (stop → build → up)
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > private_key
-          chmod 600 private_key
+          echo "🛑 Stopping existing containers..."
+          docker compose down
 
-      - name: 🚀 Deploy via SSH
-        run: |
-          ssh -i private_key -o StrictHostKeyChecking=no ${{ secrets.EC2_HOST }} << 'EOF'
-            cd ${{ secrets.EC2_PROJECT_PATH }}
-            git checkout main
-            git pull origin main
-            docker compose up -d
-          EOF
+          echo "🔧 Building Docker images..."
+          docker compose build
+
+          echo "🚀 Starting containers..."
+          docker ccompose up -d --remove-orphans
+
+          echo "✅ Deployment done."
+          docker ps -a

@@ -1,0 +1,29 @@
+name: 🚀 Continuous deployment to EC2 AWS
+
+on:
+  push:
+    branches:
+      - main  # hoặc master
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⏬ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔐 Setup SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > private_key
+          chmod 600 private_key
+
+      - name: 🚀 Deploy via SSH
+        run: |
+          ssh -i private_key -o StrictHostKeyChecking=no ${{ secrets.EC2_HOST }} << 'EOF'
+            cd ${{ secrets.EC2_PROJECT_PATH }}
+            git checkout main
+            git pull origin main
+            docker compose up -d
+          EOF
