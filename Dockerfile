@@ -26,6 +26,12 @@ RUN apk update && apk add --upgrade vips-dev
 RUN apk add --no-cache libc6-compat gcompat
 
 RUN mkdir /app
+
+# TODO only for deployment - working with appuser
+RUN addgroup appuser
+RUN adduser -D -h /home/appuser -u 1000 -G appuser appuser -s /bin/sh
+USER appuser
+
 WORKDIR /app
 
 RUN gem install bundler -v 2.4.17
