@@ -13,6 +13,33 @@ jobs:
     steps:
       - name: ⏬ Checkout code
         uses: actions/checkout@v4
+        with:
+          # Bắt buộc phải có fetch-depth: 0 để Git có đủ lịch sử commit
+          fetch-depth: 0
+
+      - name: Get All Changed Files from the Push Transaction
+        id: all-changes
+        run: |
+          # So sánh commit trước (before) và commit cuối cùng (after/sha)
+          # --name-only: chỉ in ra tên tệp đã thay đổi
+          # echo sha before and current
+          echo "Before SHA: ${{ github.event.before }}"
+          echo "Current SHA: ${{ github.sha }}"
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+
+          # In danh sách tệp để kiểm tra
+          echo "Files changed across all merged PRs:"
+          echo "$CHANGED_FILES"
+
+          # Lưu danh sách vào output để sử dụng trong các bước deploy tiếp theo
+          # Thay thế ký tự xuống dòng bằng khoảng trắng hoặc dấu phẩy
+          # Ví dụ: dùng khoảng trắng để dễ dùng trong script shell
+          echo "changed_files_list=${CHANGED_FILES//$'\n'/ }" >> $GITHUB_OUTPUT
+
+      - name: Display Changed Files
+        run: |
+          echo "Changed files in this push:"
+          echo "${{ steps.all-changes.outputs.changed_files_list }}"
 
       - name: 🧰 Deploy app (stop → build → up)
         run: |
