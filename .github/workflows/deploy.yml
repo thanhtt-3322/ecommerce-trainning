@@ -3,7 +3,7 @@ name: 🚀 Continuous deployment to EC2 AWS
 on:
   push:
     branches:
-      - main  # hoặc master
+      - main-1  # hoặc master
 
 jobs:
   deploy:
@@ -23,9 +23,17 @@ jobs:
           # So sánh commit trước (before) và commit cuối cùng (after/sha)
           # --name-only: chỉ in ra tên tệp đã thay đổi
           # echo sha before and current
-          echo "Before SHA: ${{ github.event.before }}"
+          GIT_COMPARE_BASE="${{ github.event.before }}"
+          echo "Before SHA: ${GIT_COMPARE_BASE}"
+
+          # if before is all zeros, it means it's the first commit, so we compare with empty tree
+          if [ "${{ github.event.before }}" = 0000000* ]; then
+            echo "This is the first commit, comparing with empty tree"
+            GIT_COMPARE_BASE=$(git rev-parse HEAD^1)
+          fi
+          echo "Using base SHA: $GIT_COMPARE_BASE"
           echo "Current SHA: ${{ github.sha }}"
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          CHANGED_FILES=$(git diff --name-only $GIT_COMPARE_BASE ${{ github.sha }})
 
           # In danh sách tệp để kiểm tra
           echo "Files changed across all merged PRs:"
