@@ -6,6 +6,22 @@ on:
       - main-1  # hoặc master
 
 jobs:
+  setup-laravel:
+    name: Setup Laravel
+    runs-on: sun-ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          tools: deployer:7.4.1
+      
+      - name: Check deployer version
+        run: dep --version
   deploy:
     name: Deploy to EC2
     runs-on: self-hosted
