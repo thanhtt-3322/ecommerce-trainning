@@ -21,7 +21,10 @@ jobs:
           tools: deployer:7.4.1
       
       - name: Check deployer version
-        run: dep --version
+        # check deployer version and which deployer
+        run: |
+          deployer --version
+          which deployer
   deploy:
     name: Deploy to EC2
     runs-on: self-hosted
