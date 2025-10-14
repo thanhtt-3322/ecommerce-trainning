@@ -8,7 +8,7 @@ on:
 jobs:
   setup-laravel:
     name: Setup Laravel
-    runs-on: sun-ubuntu-22.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout code
